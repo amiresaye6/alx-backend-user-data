@@ -5,6 +5,48 @@ filter datum module using re and logging
 import re
 from typing import List
 import logging
+import mysql.connector
+from os import environ
+
+PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'password', 'ip', 'last_login',)
+
+
+def get_logger() -> logging.Logger:
+    """
+    Returns a logger object for logging messages.
+
+    Returns:
+        logging.Logger: A logger object for logging messages.
+    """
+    logger = logging.getLogger("user_data")
+    logger.setLevel(logging.INFO)
+    logger.propagate = False
+
+    stream_handler = logging.StreamHandler()
+    stream_handler.setFormatter(RedactingFormatter(list(PII_FIELDS)))
+    logger.addHandler(stream_handler)
+
+    return logger
+
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """
+    Returns a MySQLConnection object for accessing Personal Data database
+
+    Returns:
+        A MySQLConnection object using connection details from
+        environment variables
+    """
+    username = environ.get("PERSONAL_DATA_DB_USERNAME", "root")
+    password = environ.get("PERSONAL_DATA_DB_PASSWORD", "")
+    host = environ.get("PERSONAL_DATA_DB_HOST", "localhost")
+    db_name = environ.get("PERSONAL_DATA_DB_NAME")
+
+    cnx = mysql.connector.connection.MySQLConnection(user=username,
+                                                     password=password,
+                                                     host=host,
+                                                     database=db_name)
+    return cnx
 
 
 class RedactingFormatter(logging.Formatter):
@@ -54,3 +96,30 @@ def filter_datum(fields: List[str], redaction: str, message: str,
         message = re.sub(f'{field}=.*?{separator}',
                          f'{field}={redaction}{separator}', message)
     return message
+
+
+def main():
+    """
+    Main function to retrieve user data from database and log to console.
+
+    This function connects to the database, retrieves user data, and logs it to
+    the console using a logger.
+    It fetches all the rows from the 'users' table, formats the data as a
+    string, and logs it using the logger.
+
+    Returns:
+        None
+    """
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM users;")
+    field_names = [i[0] for i in cursor.description]
+
+    logger = get_logger()
+
+    for row in cursor:
+        str_row = ''.join(f'{f}={str(r)}; ' for r, f in zip(row, field_names))
+        logger.info(str_row.strip())
+
+    cursor.close()
+    db.close()
