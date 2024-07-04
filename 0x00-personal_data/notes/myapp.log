@@ -1,0 +1,27 @@
+INFO:__main__:Started
+INFO:mylib:Doing something
+INFO:__main__:Finished
+INFO:__main__:Started
+INFO:mylib:Doing something intersting
+INFO:__main__:Finished here my frind
+INFO:__main__:Started
+INFO:mylib:Doing something intersting
+INFO:__main__:Finished here my frind
+INFO:__main__:Started
+INFO:mylib:Doing something intersting
+INFO:__main__:Finished here my frind
+INFO:__main__:Started
+INFO:mylib:Doing something intersting
+WARNING:mylib:Doing something intersting
+CRITICAL:mylib:Doing something intersting
+ERROR:mylib:Doing something intersting
+INFO:__main__:Finished here my frind
+2024-07-04 18:56:26,617:16
+2024-07-04 18:56:26,619:10
+2024-07-04 18:56:26,619:18
+2024-07-04 18:57:22,636:note:16:Started
+2024-07-04 18:57:22,636:mylib:10:Doing something intersting
+2024-07-04 18:57:22,636:note:18:Finished here my frind
+2024-07-04 18:57:54,808:note:16:<<Started>>
+2024-07-04 18:57:54,808:mylib:10:<<Doing something intersting>>
+2024-07-04 18:57:54,808:note:18:<<Finished here my frind>>
