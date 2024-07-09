@@ -2,6 +2,15 @@
 
 ## General Information
 
+## to run all tests at https://intranet.alxswe.com/projects/1240 run this code at browser console
+
+```js
+btns = document.querySelectorAll(".btn-primary");
+for (let i = 1; i < btns.length; i++){
+     btns[i].click()
+     }
+```
+
 This project covers the following topics:
 
 - **What authentication means**: 
