@@ -1,45 +1,42 @@
-# Project Title
+# Simple API
 
-## General Information
+Simple HTTP API for playing with `User` model.
 
-## to run all tests at https://intranet.alxswe.com/projects/1240 run this code at browser console
 
-```js
-btns = document.querySelectorAll(".btn-primary");
-for (let i = 1; i < btns.length; i++){
-     btns[i].click()
-     }
+## Files
+
+### `models/`
+
+- `base.py`: base of all models of the API - handle serialization to file
+- `user.py`: user model
+
+### `api/v1`
+
+- `app.py`: entry point of the API
+- `views/index.py`: basic endpoints of the API: `/status` and `/stats`
+- `views/users.py`: all users endpoints
+
+
+## Setup
+
+```
+$ pip3 install -r requirements.txt
 ```
 
-This project covers the following topics:
 
-- **What authentication means**: 
-  Authentication is the process of verifying the identity of a user or system. It ensures that entities are who they claim to be, usually by checking credentials such as usernames and passwords.
+## Run
 
-- **What Base64 is**: 
-  Base64 is an encoding scheme used to represent binary data in an ASCII string format. It encodes binary data into a text string using a set of 64 different characters, making it suitable for transmission over text-based protocols.
+```
+$ API_HOST=0.0.0.0 API_PORT=5000 python3 -m api.v1.app
+```
 
-- **How to encode a string in Base64**: 
-  To encode a string in Base64, you can use the following code snippet (in Python):
 
-  ```python
-  import base64
+## Routes
 
-  encoded_string = base64.b64encode(b'your_string_here').decode('utf-8')
-  print(encoded_string)
-  ```
-
-- **What Basic authentication means**: 
-  Basic authentication is a simple authentication scheme built into the HTTP protocol. It involves sending a base64-encoded string containing the username and password in the `Authorization` header of an HTTP request.
-
-- **How to send the Authorization header**: 
-  To send the `Authorization` header with Basic authentication, you can include it in your HTTP request as shown in the following example (in Python using `requests` library):
-
-  ```python
-  import requests
-  from requests.auth import HTTPBasicAuth
-
-  response = requests.get('https://api.example.com/endpoint', auth=HTTPBasicAuth('username', 'password'))
-  print(response.status_code)
-  print(response.text)
-  ```
+- `GET /api/v1/status`: returns the status of the API
+- `GET /api/v1/stats`: returns some stats of the API
+- `GET /api/v1/users`: returns the list of users
+- `GET /api/v1/users/:id`: returns an user based on the ID
+- `DELETE /api/v1/users/:id`: deletes an user based on the ID
+- `POST /api/v1/users`: creates a new user (JSON parameters: `email`, `password`, `last_name` (optional) and `first_name` (optional))
+- `PUT /api/v1/users/:id`: updates an user based on the ID (JSON parameters: `last_name` and `first_name`)
