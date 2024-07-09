@@ -6,6 +6,7 @@ authentication.
 from flask import request
 from typing import List
 from typing import TypeVar
+from models.user import User
 
 
 class Auth:
@@ -24,11 +25,11 @@ class Auth:
         Returns:
             bool: True if authentication is required, False otherwise.
         """
-        if (not path or not excluded_paths or len(excluded_paths) == 0):
+        if (not path or not excluded_paths or excluded_paths == []):
             return True
 
         for epath in excluded_paths:
-            if epath == path or epath[:-1] == path:
+            if epath == path or epath[:-1] == path or path[:-1] == epath:
                 return False
 
     def authorization_header(self, request=None) -> str:
