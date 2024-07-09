@@ -31,6 +31,7 @@ class Auth:
         for epath in excluded_paths:
             if epath == path or epath[:-1] == path or path[:-1] == epath:
                 return False
+        return True
 
     def authorization_header(self, request=None) -> str:
         """
