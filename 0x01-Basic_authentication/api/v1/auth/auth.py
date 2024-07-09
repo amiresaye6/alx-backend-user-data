@@ -1,6 +1,7 @@
 #!/usr/bin/evn python3
 """
-This module contains the Auth class which is responsible for managing API authentication.
+This module contains the Auth class which is responsible for managing API
+authentication.
 """
 from flask import request
 from typing import List
@@ -17,7 +18,8 @@ class Auth:
 
         Args:
             path (str): The path to check for authentication requirement.
-            excluded_paths (List[str]): List of paths that are excluded from authentication.
+            excluded_paths (List[str]): List of paths that are excluded from
+            authentication.
 
         Returns:
             bool: True if authentication is required, False otherwise.
