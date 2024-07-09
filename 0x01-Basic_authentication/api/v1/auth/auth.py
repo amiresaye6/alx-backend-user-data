@@ -1,4 +1,4 @@
-#!/usr/bin/evn python3
+#!/usr/bin/env python3
 """
 This module contains the Auth class which is responsible for managing API
 authentication.
