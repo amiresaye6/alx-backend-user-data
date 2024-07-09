@@ -6,7 +6,6 @@ authentication.
 from flask import request
 from typing import List
 from typing import TypeVar
-from models.user import User
 
 
 class Auth:
@@ -43,6 +42,11 @@ class Auth:
         Returns:
             str: The value of the 'Authorization' header.
         """
+        if not request:
+            return None
+        header_auth_value = request.headers.get('Authorization')
+        if header_auth_value:
+            return header_auth_value
         return None
 
     def current_user(self, request=None) -> TypeVar('User'):
